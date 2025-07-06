@@ -163,33 +163,24 @@ When running the queries in `performance.sql`, compare these metrics:
 
 #### **Sequential Scans**
 ```
-Seq Scan on booking  (cost=0.00..2500.00 rows=50000 width=100)
-  Filter: ((status)::text = 'confirmed'::text)
-  Rows Removed by Filter: 45000
+
 ```
 
 #### **Inefficient Nested Loops**
 ```
-Nested Loop  (cost=0.00..15000.00 rows=1000 width=200)
-  -> Seq Scan on booking b
-  -> Seq Scan on user u
-       Filter: (u.user_id = b.user_id)
+
 ```
 
 ### After Optimization - Improved Patterns
 
 #### **Index Scans**
 ```
-Index Scan using idx_booking_status on booking  (cost=0.29..125.00 rows=5000 width=100)
-  Index Cond: ((status)::text = 'confirmed'::text)
+
 ```
 
 #### **Efficient Nested Loops with Indexes**
 ```
-Nested Loop  (cost=0.29..250.00 rows=1000 width=200)
-  -> Index Scan using idx_booking_status on booking b
-  -> Index Scan using user_pkey on user u
-       Index Cond: (user_id = b.user_id)
+
 ```
 
 ## 🛠️ Implementation Recommendations

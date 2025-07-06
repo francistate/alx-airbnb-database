@@ -241,6 +241,7 @@ CREATE INDEX IF NOT EXISTS idx_booking_summary_covering ON Booking(user_id, stat
 INCLUDE (booking_id, property_id, total_price, start_date, end_date);
 
 -- =====================================================
+<<<<<<< HEAD
 -- PERFORMANCE TESTING QUERIES
 -- =====================================================
 
@@ -351,14 +352,28 @@ WHERE to_tsvector('english', name || ' ' || description) @@ to_tsquery('english'
 -- =====================================================
 
 -- Analyze tables to update statistics (run after creating indexes)
+=======
+-- INDEX MAINTENANCE COMMANDS
+-- =====================================================
+
+-- Analyze tables to update statistics (should be run after creating indexes)
+/*
+>>>>>>> 40f9cf799471ed0b44621334795d9a3840b4f8ad
 ANALYZE User;
 ANALYZE Property;
 ANALYZE Booking;
 ANALYZE Payment;
 ANALYZE Review;
 ANALYZE Message;
+<<<<<<< HEAD
 
 -- Check index usage statistics
+=======
+*/
+
+-- Check index usage statistics
+/*
+>>>>>>> 40f9cf799471ed0b44621334795d9a3840b4f8ad
 SELECT 
     schemaname,
     tablename,
@@ -367,16 +382,25 @@ SELECT
     idx_tup_read as tuples_read,
     idx_tup_fetch as tuples_fetched
 FROM pg_stat_user_indexes 
+<<<<<<< HEAD
 WHERE schemaname = 'public'
 ORDER BY idx_scan DESC;
 
 -- Find unused indexes
+=======
+ORDER BY idx_scan DESC;
+*/
+
+-- Find unused indexes
+/*
+>>>>>>> 40f9cf799471ed0b44621334795d9a3840b4f8ad
 SELECT 
     schemaname,
     tablename,
     indexname,
     idx_scan
 FROM pg_stat_user_indexes 
+<<<<<<< HEAD
 WHERE idx_scan = 0 
 AND schemaname = 'public'
 ORDER BY tablename, indexname;
@@ -390,3 +414,8 @@ SELECT
 FROM pg_tables 
 WHERE schemaname = 'public'
 ORDER BY pg_total_relation_size(tablename::regclass) DESC;
+=======
+WHERE idx_scan = 0
+ORDER BY tablename, indexname;
+*/
+>>>>>>> 40f9cf799471ed0b44621334795d9a3840b4f8ad
